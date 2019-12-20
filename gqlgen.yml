@@ -1,0 +1,17 @@
+# .gql.yml example
+#
+# Refer to https://gqlgen.com/config/
+# for detailed .gqlgen.yml documentation.
+
+schema:
+- schema.graphql
+exec:
+  filename: gqlgen/generated.go
+model:
+  filename: gqlgen/models_gen.go
+resolver:
+  filename: server/resolver_gen.go
+  type: Resolver
+autobind:
+  - github.com/Yamashou/gae-relay/model
+

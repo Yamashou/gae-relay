@@ -1,0 +1,77 @@
+interface Node {
+    id: ID!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
+type User implements Node {
+    id: ID!
+    name: String!
+
+    events(first: Int!, after: String): EventConnection!
+}
+
+
+type Event implements Node {
+    id: ID!
+    userID: ID!
+    description: String!
+}
+
+# Multi Users
+
+type UserEdge {
+    cursor: String!
+    node: User
+}
+
+type UserConnection {
+    edges: [UserEdge]
+    pageInfo: PageInfo!
+}
+
+type EventEdge {
+    cursor: String!
+    node: Event
+}
+
+type EventConnection {
+    edges: [EventEdge]
+    pageInfo: PageInfo!
+}
+
+# Mutation Input and payload
+
+input CreateUserInput {
+    name: String!
+}
+
+type CreateUserPayload {
+    user: User!
+}
+
+input CreateEventInput {
+    userID: ID!
+    description: String!
+}
+
+type CreateEventPayload {
+    event: Event!
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): CreateUserPayload
+    createEvent(input: CreateEventInput!): CreateEventPayload
+}
+
+type Query {
+    node(id: ID!): Node
+    user(id: ID!): User
+    users(first: Int!, after: String): UserConnection!
+}
+
+
