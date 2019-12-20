@@ -3,15 +3,11 @@ package datastore
 import (
 	"context"
 
-	"google.golang.org/api/iterator"
-
 	"github.com/Yamashou/gae-relay/model"
-
-	"golang.org/x/xerrors"
-
-	"go.mercari.io/datastore/boom"
-
 	"go.mercari.io/datastore"
+	"go.mercari.io/datastore/boom"
+	"golang.org/x/xerrors"
+	"google.golang.org/api/iterator"
 )
 
 type Client struct {
@@ -53,10 +49,10 @@ func (c *Client) GetEvent(ctx context.Context, id model.EventID) (*model.Event, 
 
 func (c *Client) GetUsers(ctx context.Context, limit int, cursor string) (*model.UserConnection, error) {
 	// 次のページが存在するか確認するため1件多く取得する
-	max := limit + 1
+	limitPlusOne := limit + 1
 	bm := boom.FromClient(ctx, c.client)
 	q := bm.NewQuery(bm.Kind(model.User{})).
-		Limit(max)
+		Limit(limitPlusOne)
 	if cursor != "" {
 		cur, err := c.client.DecodeCursor(cursor)
 		if err != nil {
@@ -99,7 +95,7 @@ func (c *Client) GetUsers(ctx context.Context, limit int, cursor string) (*model
 
 	// 次のページが存在する場合
 	var hasNextPage bool
-	if len(edges) == max {
+	if len(edges) == limitPlusOne {
 		hasNextPage = true
 		// 最後の1件は次のページの存在確認用なので除外する
 		edges = edges[:len(edges)-1]

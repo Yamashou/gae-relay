@@ -71,7 +71,7 @@ type Mutation {
 type Query {
     node(id: ID!): Node
     user(id: ID!): User
-    users(first: Int!, after: String): UserConnection!
+    users(first: Int! = 10, after: String): UserConnection!
 }
 
 

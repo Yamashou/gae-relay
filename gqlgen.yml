@@ -10,7 +10,7 @@ exec:
 model:
   filename: gqlgen/models_gen.go
 resolver:
-  filename: server/resolver_gen.go
+  filename: server/resolver_gen2.go
   type: Resolver
 autobind:
   - github.com/Yamashou/gae-relay/model
