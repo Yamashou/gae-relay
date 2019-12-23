@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/99designs/gqlgen/handler"
 	"net/http"
+
+	"github.com/99designs/gqlgen/handler"
 
 	"github.com/Yamashou/gae-relay/datastore"
 
